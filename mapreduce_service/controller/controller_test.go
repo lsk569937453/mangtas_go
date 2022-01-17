@@ -15,11 +15,13 @@ import (
 
 var router *gin.Engine
 
+const ParseTopNUrl = "/mangtas/parseTopText"
+
 func TestParseJsonWrongJsonStruct(t *testing.T) {
 	var w *httptest.ResponseRecorder
 	assert := assert.New(t)
 	// 1.测试 index 请求
-	urlIndex := "/mangtas/parseTopText"
+	urlIndex := ParseTopNUrl
 	body := struct {
 		wrongText string
 	}{"100 200 300 400"}
@@ -38,7 +40,7 @@ func TestParseJsonEmptyInput(t *testing.T) {
 	var w *httptest.ResponseRecorder
 	assert := assert.New(t)
 	// 1.测试 index 请求
-	urlIndex := "/mangtas/parseTopText"
+	urlIndex := ParseTopNUrl
 	sourceText := ""
 	body := vojo.TopRequst{
 		SourceText: &sourceText,
@@ -57,7 +59,7 @@ func TestParseJsonSpaceInput(t *testing.T) {
 	var w *httptest.ResponseRecorder
 	assert := assert.New(t)
 	// 1.测试 index 请求
-	urlIndex := "/mangtas/parseTopText"
+	urlIndex := ParseTopNUrl
 	sourceText := "    "
 	body := vojo.TopRequst{
 		SourceText: &sourceText,
@@ -77,7 +79,7 @@ func TestTopServiceOk(t *testing.T) {
 	var w *httptest.ResponseRecorder
 	assert := assert.New(t)
 	// 1.测试 index 请求
-	urlIndex := "/mangtas/parseTopText"
+	urlIndex := ParseTopNUrl
 	sourceText := "test1 test2 test3 a b c abc a b c test3 test2 test1"
 	body := vojo.TopRequst{
 		SourceText: &sourceText,
