@@ -2,8 +2,8 @@ package service
 
 import (
 	"fmt"
+	"mapreduce_service/util"
 	"mapreduce_service/vojo"
-	"sort"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -29,13 +29,24 @@ func ParseTopText(c *gin.Context) (error, []vojo.TopServiceKV) {
 	for k, v := range resJson {
 		ss = append(ss, vojo.TopServiceKV{k, v})
 	}
-
-	sort.Slice(ss, func(i, j int) bool {
-		return ss[i].Times > ss[j].Times
-	})
-	return nil, ss
+	heapLength := 10
+	if len(ss) < 10 {
+		heapLength = len(ss)
+	}
+	startNums := ss[:heapLength]
+	util.MiniHeap(startNums)
+	for _, data := range ss[heapLength:] {
+		if data.Times <= startNums[0].Times {
+			continue
+		} else {
+			startNums[0] = data
+			util.MiniHeap(startNums)
+		}
+	}
+	return nil, startNums
 
 }
+
 func WordCount(s string) map[string]int {
 	words := strings.Fields(s)
 	m := make(map[string]int)

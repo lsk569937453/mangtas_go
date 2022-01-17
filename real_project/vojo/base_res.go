@@ -7,6 +7,5 @@ const (
 )
 
 type BaseRes struct {
-	Rescode    int         `json:"resCode"`
-	ResMessage interface{} `json:"resMessage"`
+	Rescode int `json:"resCode"`
 }
