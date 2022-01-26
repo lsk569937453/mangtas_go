@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"mapreduce_service/util"
 	"mapreduce_service/vojo"
+	"sort"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -43,6 +44,13 @@ func ParseTopText(c *gin.Context) (error, []vojo.TopServiceKV) {
 			util.MiniHeap(startNums)
 		}
 	}
+	sort.Slice(startNums, func(i, j int) bool {
+		if ss[i].Times < ss[j].Times {
+			return false
+		} else {
+			return true
+		}
+	})
 	return nil, startNums
 
 }
